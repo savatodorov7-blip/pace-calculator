@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athletics Pace Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="intro" aria-labelledby="app-title">
+      <p class="eyebrow">Track and road pacing</p>
+      <h1 id="app-title">Athletics Pace Calculator</h1>
+      <p class="intro-copy" id="intro-copy">Enter a race distance and finish time to calculate pace, speed, and cumulative splits.</p>
+    </section>
+
+    <div class="tab-list" role="tablist" aria-label="Calculator tools">
+      <button type="button" class="tab-button is-active" id="race-tab" role="tab" aria-selected="true" aria-controls="race-panel" data-tab-target="race-panel">Race Calculator</button>
+      <button type="button" class="tab-button" id="workout-tab" role="tab" aria-selected="false" aria-controls="workout-panel" data-tab-target="workout-panel">Workout Rep Calculator</button>
+    </div>
+
+    <section class="calculator tab-panel" id="race-panel" role="tabpanel" aria-labelledby="race-tab">
+      <form id="pace-form" class="input-panel" novalidate>
+        <div class="preset-group" aria-label="Preset race distances">
+          <span class="preset-label">Race distance</span>
+          <div class="preset-buttons">
+            <button type="button" class="preset-button distance-preset-button" data-distance="800">800m</button>
+            <button type="button" class="preset-button distance-preset-button" data-distance="1500">1500m</button>
+            <button type="button" class="preset-button distance-preset-button" data-distance="2000">2000m</button>
+            <button type="button" class="preset-button distance-preset-button" data-distance="3000">3000m</button>
+            <button type="button" class="preset-button distance-preset-button" data-distance="5000">5000m</button>
+            <button type="button" class="preset-button distance-preset-button" data-distance="10000">10000m</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="distance">Distance</label>
+          <div class="input-with-unit">
+            <input id="distance" name="distance" type="number" min="1" step="1" placeholder="5000" required>
+            <span>m</span>
+          </div>
+        </div>
+
+        <div class="preset-group" aria-label="Training pace presets">
+          <span class="preset-label">Training Pace Presets</span>
+          <div class="preset-buttons">
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="180">3:00 / km</button>
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="190">3:10 / km</button>
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="195">3:15 / km</button>
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="200">3:20 / km</button>
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="210">3:30 / km</button>
+            <button type="button" class="preset-button pace-preset-button" data-pace-seconds="240">4:00 / km</button>
+          </div>
+        </div>
+
+        <div class="time-grid">
+          <div class="field-group">
+            <label for="minutes">Minutes</label>
+            <input id="minutes" name="minutes" type="number" min="0" step="1" placeholder="18" required>
+          </div>
+
+          <div class="field-group">
+            <label for="seconds">Seconds</label>
+            <input id="seconds" name="seconds" type="number" min="0" max="59" step="1" placeholder="30" required>
+          </div>
+        </div>
+
+        <p id="error-message" class="error-message" role="alert" aria-live="polite"></p>
+
+        <div class="button-row">
+          <button type="submit">Calculate</button>
+          <button type="reset" class="secondary-button">Reset</button>
+        </div>
+      </form>
+
+      <div class="results-panel" aria-live="polite">
+        <article class="result-card highlight-card">
+          <span class="result-label">Pace per kilometer</span>
+          <strong id="pace-result">--:--</strong>
+        </article>
+
+        <article class="result-card">
+          <span class="result-label">Average speed</span>
+          <strong id="speed-result">-- km/h</strong>
+        </article>
+
+        <article class="splits-card">
+          <div class="card-heading">
+            <span class="result-label">Split times</span>
+            <span class="small-note">Even pace</span>
+          </div>
+          <div id="splits-list" class="splits-list">
+            <div class="split-row"><span>200m</span><strong>--:--</strong></div>
+            <div class="split-row"><span>400m</span><strong>--:--</strong></div>
+            <div class="split-row"><span>600m</span><strong>--:--</strong></div>
+            <div class="split-row"><span>800m</span><strong>--:--</strong></div>
+            <div class="split-row"><span>1000m</span><strong>--:--</strong></div>
+          </div>
+        </article>
+
+        <article class="splits-card">
+          <div class="card-heading">
+            <span class="result-label">Full Race Splits</span>
+            <span class="small-note">Cumulative</span>
+          </div>
+          <div id="race-splits-list" class="splits-list">
+            <div class="split-row"><span>400m</span><strong>--:--</strong></div>
+            <div class="split-row"><span>Finish</span><strong>--:--</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="workout-section tab-panel" id="workout-panel" role="tabpanel" aria-labelledby="workout-tab" hidden>
+      <form id="rep-form" class="input-panel workout-form" novalidate>
+        <div class="card-heading">
+          <span id="workout-title" class="result-label">Workout Rep Calculator</span>
+          <span class="small-note">Target time</span>
+        </div>
+        <p class="helper-text">Enter the rep distance and target pace per kilometer. Example: 600m at 3:15/km = 1:57.</p>
+
+        <div class="preset-group" aria-label="Preset rep distances">
+          <span class="preset-label">Rep distance</span>
+          <div class="preset-buttons rep-preset-buttons">
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="200">200m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="300">300m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="400">400m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="500">500m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="600">600m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="800">800m</button>
+            <button type="button" class="preset-button rep-preset-button" data-rep-distance="1000">1000m</button>
+          </div>
+        </div>
+
+        <div class="preset-group" aria-label="Workout pace presets">
+          <span class="preset-label">Pace per km</span>
+          <div class="preset-buttons">
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="180">3:00 / km</button>
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="190">3:10 / km</button>
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="195">3:15 / km</button>
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="200">3:20 / km</button>
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="210">3:30 / km</button>
+            <button type="button" class="preset-button rep-pace-preset-button" data-pace-seconds="240">4:00 / km</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="rep-distance">Rep distance</label>
+          <div class="input-with-unit">
+            <input id="rep-distance" name="rep-distance" type="number" min="1" step="1" placeholder="400">
+            <span>m</span>
+          </div>
+        </div>
+
+        <div class="time-grid">
+          <div class="field-group">
+            <label for="rep-pace-minutes">Pace per km - minutes</label>
+            <input id="rep-pace-minutes" name="rep-pace-minutes" type="number" min="0" step="1" placeholder="3">
+          </div>
+
+          <div class="field-group">
+            <label for="rep-pace-seconds">Pace per km - seconds</label>
+            <input id="rep-pace-seconds" name="rep-pace-seconds" type="number" min="0" max="59" step="1" placeholder="00">
+          </div>
+        </div>
+
+        <p id="rep-error-message" class="error-message" role="alert" aria-live="polite"></p>
+
+        <div class="button-row">
+          <button type="submit">Calculate Rep</button>
+          <button type="reset" class="secondary-button">Reset</button>
+        </div>
+      </form>
+
+      <article class="result-card highlight-card workout-result-card" aria-live="polite">
+        <span class="result-label">Target rep time</span>
+        <strong id="rep-time-result">--:--</strong>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
