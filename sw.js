@@ -1,14 +1,13 @@
-const CACHE_NAME = "athletics-pace-calculator-v2";
+const CACHE_NAME = "athletics-pace-calculator-v3";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
   "./manifest.webmanifest",
-  "./icons/app-icon.png",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/maskable-icon-512.png"
+  "./icon-192.png",
+  "./icon-512.png",
+  "./maskable-icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
