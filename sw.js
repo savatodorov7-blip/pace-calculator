@@ -1,4 +1,4 @@
-const CACHE_NAME = "athletics-pace-calculator-v3";
+const CACHE_NAME = "athletics-pace-calculator-v4";
 const APP_ASSETS = [
   "./",
   "./index.html",

@@ -182,6 +182,31 @@ h1 {
   box-shadow: 0 0 0 3px rgba(57, 217, 138, 0.16);
 }
 
+.custom-pace-group {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px;
+}
+
+.custom-pace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.custom-pace-group .field-group {
+  margin-bottom: 0;
+}
+
+.custom-pace-button {
+  width: fit-content;
+  min-height: 40px;
+}
+
 .field-group {
   display: grid;
   gap: 8px;
@@ -364,6 +389,7 @@ button:hover {
   .calculator,
   .workout-section,
   .results-panel,
+  .custom-pace-grid,
   .time-grid {
     grid-template-columns: 1fr;
   }

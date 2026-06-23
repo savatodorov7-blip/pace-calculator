@@ -2,6 +2,9 @@ const form = document.querySelector("#pace-form");
 const distanceInput = document.querySelector("#distance");
 const minutesInput = document.querySelector("#minutes");
 const secondsInput = document.querySelector("#seconds");
+const customPaceMinutesInput = document.querySelector("#custom-pace-minutes");
+const customPaceSecondsInput = document.querySelector("#custom-pace-seconds");
+const applyCustomPaceButton = document.querySelector("#apply-custom-pace");
 const errorMessage = document.querySelector("#error-message");
 const paceResult = document.querySelector("#pace-result");
 const speedResult = document.querySelector("#speed-result");
@@ -228,6 +231,40 @@ pacePresetButtons.forEach((button) => {
     errorMessage.textContent = "";
     secondsInput.focus();
   });
+});
+
+applyCustomPaceButton.addEventListener("click", () => {
+  const distanceMeters = Number(distanceInput.value);
+  const paceMinutes = Number(customPaceMinutesInput.value);
+  const paceSeconds = Number(customPaceSecondsInput.value);
+
+  if (!Number.isInteger(distanceMeters) || distanceMeters <= 0) {
+    errorMessage.textContent = "Choose or enter a positive whole-number distance first.";
+    showPlaceholderResults();
+    distanceInput.focus();
+    return;
+  }
+
+  if (customPaceMinutesInput.value === "" || !Number.isInteger(paceMinutes) || paceMinutes <= 0) {
+    errorMessage.textContent = "Enter whole pace minutes greater than 0.";
+    customPaceMinutesInput.focus();
+    return;
+  }
+
+  if (customPaceSecondsInput.value === "" || !Number.isInteger(paceSeconds) || paceSeconds < 0 || paceSeconds > 59) {
+    errorMessage.textContent = "Enter whole pace seconds from 0 to 59.";
+    customPaceSecondsInput.focus();
+    return;
+  }
+
+  const paceTotalSeconds = paceMinutes * 60 + paceSeconds;
+  const totalSeconds = Math.round((paceTotalSeconds * distanceMeters) / 1000);
+
+  minutesInput.value = Math.floor(totalSeconds / 60);
+  secondsInput.value = totalSeconds % 60;
+  clearActivePreset(pacePresetButtons);
+  errorMessage.textContent = "";
+  secondsInput.focus();
 });
 
 repPresetButtons.forEach((button) => {

@@ -57,6 +57,22 @@
           </div>
         </div>
 
+        <div class="custom-pace-group" aria-label="Custom pace per kilometer">
+          <span class="preset-label">Custom pace per km</span>
+          <div class="custom-pace-grid">
+            <div class="field-group">
+              <label for="custom-pace-minutes">Pace minutes</label>
+              <input id="custom-pace-minutes" name="custom-pace-minutes" type="number" min="1" step="1" placeholder="3">
+            </div>
+
+            <div class="field-group">
+              <label for="custom-pace-seconds">Pace seconds</label>
+              <input id="custom-pace-seconds" name="custom-pace-seconds" type="number" min="0" max="59" step="1" placeholder="08">
+            </div>
+          </div>
+          <button type="button" class="secondary-button custom-pace-button" id="apply-custom-pace">Apply custom pace</button>
+        </div>
+
         <div class="time-grid">
           <div class="field-group">
             <label for="minutes">Minutes</label>
