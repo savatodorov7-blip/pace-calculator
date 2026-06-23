@@ -17,3 +17,5 @@ A simple static web app for calculating running pace, average speed, and split t
 3. The app will open in your default web browser.
 
 No install step is required. The app uses only HTML, CSS, and JavaScript.
+
+Deployed with GitHub Pages as a PWA.
